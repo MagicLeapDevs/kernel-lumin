@@ -1,0 +1,17 @@
+Magic Leap Raw Electromagnetic Data Driver
+
+Implements a 6DOF controller driver that communicates with
+SPE over mailbox and pipes raw electromagnetic data from
+SPE to userspace components.
+
+Required properties:
+
+- compatible	: must be "ml,aon-em-raw"
+- mboxes	: IVC channel
+
+Example:
+
+aon_em_raw {
+	compatible = "ml,aon-em-raw";
+	mboxes = <&aon 2>;
+};

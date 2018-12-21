@@ -1,0 +1,14 @@
+
+#ifndef _SANDBOX_FILTER
+#define _SANDBOX_FILTER(name, str)
+#endif
+
+
+_SANDBOX_FILTER(SYSCALLS,		"syscalls")
+_SANDBOX_FILTER(SYSCALLS_PERMISSIVE,	"syscalls-permissive")
+_SANDBOX_FILTER(JAIL,			"jail")
+_SANDBOX_FILTER(NO_NEW_PRIVS,		"no_new_privs")
+_SANDBOX_FILTER(ENABLE_JIT,		"enable-jit")
+
+
+#undef _SANDBOX_FILTER

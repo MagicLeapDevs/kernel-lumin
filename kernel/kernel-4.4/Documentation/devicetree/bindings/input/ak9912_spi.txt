@@ -1,0 +1,18 @@
+Magic Leap ak9912 (beltpack compass) device driver
+
+Required properties:
+	- compatible: Should be "ml,ak9912" when using the Magic Leap icm20602 device
+	- reg: SPI chip select numbert for the device
+	- spi-max-frequency: Max SPI frequency to use
+	- interrupt-parent: the phandle for the interrupt controller
+	- interrupts: interrupt line
+
+Example:
+	spi-ak9912 {
+		compatible = "ml,ak9912";
+		reg = <0>; /* spi chip select 0 */
+		spi-max-frequency = <3000000>;
+		interrupt-parent = <&tegra_main_gpio>;
+		interrupts = <TEGRA_MAIN_GPIO(A, 1) GPIO_ACTIVE_HIGH>;
+		status = "okay";
+	};

@@ -1,0 +1,16 @@
+Tegra maximum (junction) temperature reporting (virtual) sensor
+---------------------------------------------------------------
+
+This module reports the maximum SoC temperature (hottest point on the chip). It
+polls on the temperatures from existing sensor devices (thermal zones), adds a
+'hotspot offset' to the respective temperatures just polled, and, reports back
+the maximum of all those values.
+
+The participating zones and their respective hotspot offsets are configurable
+via device tree.
+
+This virtual sensor works completely on the polling mechanism supported by the
+thermal core, and, doesn't have any interrupts support.
+
+For more information on how to configure this driver, please look at
+kernel/Documentation/devicetree/thermal/nvidia,tegra-tj-thermal.txt

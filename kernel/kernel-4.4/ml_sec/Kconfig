@@ -1,0 +1,95 @@
+#
+# MagicLeap's Security configuration
+#
+
+menu "MagicLeap's Security configuration"
+
+config MLSEC_EXEC_IMPLIES_DENYWRITE
+	bool "Deny changes to files that are mmap'd with execute permission"
+	help
+	   Sets the MAP_DENYWRITE when a file backed mmap is performed with
+	   PROT_EXEC.
+
+config MLSEC_ELF_SIGNING
+	bool "Signature verification for all ELF binaries"
+	depends on MLSEC_EXEC_IMPLIES_DENYWRITE
+	depends on PAX_MPROTECT
+	select SYSTEM_DATA_VERIFICATION
+	select CRYPTO_SHA512
+	help
+	   Checks that each ELF binary that is loaded as executable is properly
+	   signed during their load.
+
+config MLSEC_ELF_SIGNING_DEVELOP
+	bool "Enable Signing in development mode"
+	depends on MLSEC_ELF_SIGNING
+	help
+	   In development mode, you can disable the signing using debugfs
+
+config MLSEC_SANDBOX
+	bool "Enable Sandbox features"
+	help
+
+config MLSEC_SANDBOX_AUDIT
+	bool "Enable Sandbox auditing"
+	depends on MLSEC_SANDBOX
+
+config MLSEC_SANDBOX_DEVELOP
+	bool "Enable Sandbox in development mode"
+	depends on MLSEC_SANDBOX
+	select MLSEC_SANDBOX_AUDIT
+	help
+	   Sandbox in development mode enables the use of 'syscalls.profile' and
+	   'sandbox.profile' for manual control over the Sandbox operation.
+
+config MLSEC_ALLOW_PERMISSIVE_DEBUGGING
+	bool "Allow permissive debugging mode"
+	depends on DEBUG_FS
+	depends on PAX_MPROTECT
+	help
+	   Allow disabling all debug restrictions through debugfs
+
+config MLSEC_COMMON
+	bool "Common"
+	default y if (MLSEC_SANDBOX || MLSEC_ELF_SIGNING)
+	help
+	   Do not set this directly, this turns on automatically if either of the
+	   ML security features are set.
+
+config MLSEC_CHECK_VERITY
+	bool "Validate dm-verity enforcement"
+	help
+	   Verify that dm-verity is applied on ML internal partitions.
+
+config MLSEC_HARDEN_PTRACE
+	bool "Allow ptrace() only on debuggable executables"
+	depends on MLSEC_ELF_SIGNING
+	help
+	   With this flag enabled, the ptrace() syscall will fail for any process
+	   which is not marked "is_debuggable" through ML's taildata on the main
+	   process executable.
+
+config MLSEC_HARDEN_LOAD_SO
+	bool "Allow loading a SO according to the executable's and its signatures"
+	depends on MLSEC_ELF_SIGNING
+	help
+	   While loading a shared object:
+	   1. ml-internal executable can't load non-ml-internal SO.
+	   2. non-ml-internal SO can only get loaded to executable from same dir.
+
+config MLSEC_SANDBOX_VIOLATION_LOGGING
+	bool "Signal SIGVIOLATION if action is denied"
+	depends on MLSEC_SANDBOX
+	help
+	   This option will cause the kernel to signal the calling process
+	   if the action generates a sandbox violation.
+
+config MLSEC_SELINUX_VIOLATION_LOGGING
+	bool "Signal SIGVIOLATION if action is denied"
+	depends on SECURITY_SELINUX
+	help
+	   This option will cause the kernel to signal the calling process
+	   if the action generates SELinux violation.
+
+endmenu
+

@@ -1,0 +1,4 @@
+:EXEC
+mount
+umount
++mknodat

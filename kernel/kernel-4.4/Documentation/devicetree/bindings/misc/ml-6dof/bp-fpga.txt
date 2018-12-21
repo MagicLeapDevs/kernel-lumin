@@ -1,0 +1,13 @@
+Magic Leap FPGA on the beltpack side
+
+Required properties:
+
+  - compatible: must be "ml,bp-fpga-i2c"
+  - reg: the I2c address of FPGA
+
+Example:
+
+bp_fpga@52 {
+	compatible = "ml,bp-fpga-i2c";
+	reg = <0x52>;
+};

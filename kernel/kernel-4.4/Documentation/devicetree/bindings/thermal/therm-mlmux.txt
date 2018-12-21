@@ -1,0 +1,28 @@
+ML Thermal Virtual Device over MLMUX
+
+Virtual device communicating over MLMUX protocol.
+The driver will register into Thermal FW and update the
+temperature communicated over MLMUX.
+
+Required properties:
+ - compatible		: must be "ml,thern_mlmux"
+ - ml,chan-name		: MLMUX client channel name
+ - mlmux		: phandle to the ML MUX controller
+
+Optional properties:
+ - trip-ddr1-critical-temp  : Critical trip temperature for DDR1 thermistor to cause shutdown.
+ - trip-ddr2-critical-temp  : Critical trip temperature for DDR2 thermistor to cause shutdown.
+ - trip-ddr3-critical-temp  : Critical trip temperature for DDR3 thermistor to cause shutdown.
+ - trip-fan-critical-temp   : Critical trip temperature for Fan thermistor to cause shutdown.
+ - trip-ufs-critical-temp   : Critical trip temperature for UFS thermistor to cause shutdown.
+ - trip-xxxx-critical-temp  : Critical trip temperature for any new xxxx thermistor to cause shutdown.
+* Each of the trip points are Type: unsigned and Size: one cell.
+
+Example:
+	ml_therm {
+		compatible = "ml,therm_mlmux";
+		status = "okay";
+		ml,chan-name = "therm";
+		mlmux = <&ml_mux1>;
+		trip-ufs-critical-temp = <80000>;
+	};

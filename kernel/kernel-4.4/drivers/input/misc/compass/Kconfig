@@ -1,0 +1,23 @@
+#
+# Kconfig for stand-alone compass input device drivers
+#
+
+config ML_AK9912
+	tristate "AKM 9912 devices"
+	depends on SPI && SYSFS && INPUT
+	default n
+	help
+      This driver supports the AKM 9912 devices.
+      Driver uses SPI interface and reports data via
+      input subsystem.
+      Driver supports all four data rates (10, 20, 50, 100Hz)
+
+
+config INV_AK8975
+    tristate "Invensense AKM AK8975 compass input device driver"
+    depends on I2C && SYSFS && INPUT && INPUT_EVDEV
+    default n
+    help
+      This driver supports the AKM AK8975 compass device.
+      This driver can be built as a module. The module will be called
+      inv-ak8975.

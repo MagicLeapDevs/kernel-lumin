@@ -1,0 +1,20 @@
+ML Virtual I2C Adapter over MLMUX
+
+Implements a virtual i2c adapter than will tunnel i2c read and write register
+configurations over the MLMUX protocol.
+
+Required properties:
+ - compatible		: must be "ml,i2c-mux"
+ - #address-cells	: must be <1>
+ - #size-cells		: must be <0>
+ - ml,chan-name		: name of the channel in the MLMUX path
+ - mlmux		: phandle to the ML MUX controller
+
+Example:
+	i2c_mlmux0 {
+		compatible = "ml,i2c-mlmux";
+		status = "okay";
+
+		ml,chan-name = "i2c0";
+		mlmux = <&ml_mux2>;
+	};

@@ -1,0 +1,43 @@
+/*
+ * tegra186-quill-p3310-1000-c03-00-dsi-hdmi-dp-bl.dts: DTS file for Quill
+ * to enable display on two heads with: HDMI and DP in bootloader and
+ * all three heads with: DSI, HDMI and DP in Kernel.
+ *
+ * Copyright (c) 2016-2017, NVIDIA CORPORATION.  All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ */
+
+#include "tegra186-quill-p3310-1000-c03-00-base.dts"
+
+/ {
+	nvidia,dtsfilename = __FILE__;
+
+	host1x {
+		nvdisplay@15220000 {
+			bootloader-status = "okay";
+		};
+
+		sor {
+			bootloader-status = "okay";
+			hdmi-display {
+				bootloader-status = "disabled";
+			};
+			dp-display {
+				bootloader-status = "okay";
+			};
+		};
+
+		dpaux@155c0000 {
+			bootloader-status = "okay";
+		};
+	};
+};
