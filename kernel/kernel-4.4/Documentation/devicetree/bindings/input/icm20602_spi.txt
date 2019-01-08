@@ -1,0 +1,36 @@
+Magic Leap icm20602 (beltpack imu) device driver
+
+Required properties:
+	- compatible: Should be "ml,icm20602" when using the Magic Leap icm20602 device
+	- reg: SPI chip select numbert for the device
+	- spi-max-frequency: Max SPI frequency to use
+	- interrupt-parent: the phandle for the interrupt controller
+	- interrupts: interrupt line
+	- rate: default output data rate for accel and gyro
+	- acc_en: default state for accel driver
+	- acc_fsr: full scale range for accel
+	- acc_avg: avg filter settings for accel
+	- acc_dlpf: low pass filter settings for accel
+	- gyr_en: default state for gyro driver
+	- gyr_fsr: full scale range for gyro
+	- gyr_avg: avg setting for gyro
+	- gyr_dlpf: low pass filter for gyro
+
+Example:
+	spi-icm20602 {
+		compatible = "ml,icm20602";
+		reg = <1>; /* spi chip select 1 */
+		spi-max-frequency = <5000000>;
+		interrupt-parent = <&tegra_main_gpio>;
+		interrupts = <TEGRA_MAIN_GPIO(X, 6) GPIO_ACTIVE_HIGH>;
+		rate = <10>; /* Hz */
+		acc_en = <0>;
+		acc_fsr = <8>; /* +-g */
+		acc_avg = <4>; /* samples */
+		acc_dlpf = <3>;
+		gyr_en = <0>;
+		gyr_fsr = <500>; /* +-dps */
+		gyr_avg = <1>; /* samples */
+		gyr_dlpf = <3>;
+		status = "okay";
+	};

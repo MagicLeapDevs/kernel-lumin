@@ -1,0 +1,59 @@
+Magic Leap MUX GPIO controller
+
+A remote GPIO controller to expose GPIOS on the wearable as normal kernel
+GPIOS that can be configured via the typical gpio_ family of APIs. The
+current implementation does not support interrupt notification and thus
+creates solely a GPIO controller.
+
+The main node shall describe the necessary information to setup the gpio
+controller and all children nodes are describing GPIOs which shall be
+exposed through the 'ml,gpio-name' property.
+
+--- Root Node ---
+
+Required properties:
+- compatible : Should be "ml,gpio-mlmux"
+- reg : Address and length of the register set for the device
+- #gpio-cells : Should be two. The first cell is the pin number and the
+  second cell is used to specify optional parameters (currently unused).
+- gpio-controller : Marks the device node as a GPIO controller.
+- #address-cells : Specify one address field. This must be 1.
+- #size-cells : Specify no size-cells. This must be 0.
+- ml,chan-name : The MLMUX channel name to communicate over the MLMUX
+  protocol to the wearable.
+- mlmux : The phandle of the ml_mux controller
+
+--- Child Node ---
+
+Required properties:
+- ml,gpio-num : An arbitrary pin number corresponding closely to the
+  gpio number on the remote. This is simply for referencing the specific
+  gpio via the phandle.
+- ml,gpio-name : The name of the GPIO on the remote wearable.
+- ml,dir : The direction, 0 for input, 1 for output
+
+Example:
+
+wear_gpio: mlmux_gpio {
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	#gpio-cells = <2>:
+	gpio-controller;
+
+	compatible = "ml,mlmux-gpio";
+	ml,chan-name = "gpio";
+	mlmux = <&ml_mux2>;
+
+	gpio@0 {
+		ml,gpio-num = <0>;
+		ml,gpio-name = "BOOT0";
+		ml,dir = /bits/ 8 <0>;
+	};
+
+	gpio@7 {
+		ml,gpio-num = <7>;
+		ml,gpio-name = "BOOT1";
+		ml,dir = /bits/ 8 <1>;
+	};
+};

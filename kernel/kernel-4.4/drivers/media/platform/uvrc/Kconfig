@@ -1,0 +1,14 @@
+comment "Magic Leap Remote Camera Support"
+
+config ML_UVRC
+	bool "Magic Leap USB Video Raw Camera module"
+	depends on VIDEO_DEV && VIDEO_V4L2 && OF && ML_MUX
+	select VIDEOBUF2_VMALLOC
+	default n
+	---help---
+	  Enables the kernel driver that supports the remote camera as a USB
+	  video raw camera device. The device will be exposed as a V4L2
+	  compatible interface and route the necessary requests to the remote
+	  wearable.
+
+	  If unsure, say N.

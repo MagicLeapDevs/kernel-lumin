@@ -1,0 +1,396 @@
+/*
+ * tegra186-phaedra-power.dtsi
+ *
+ * Main device tree for the phaedra product.
+ *
+ * Copyright (c) 2017, Magic Leap, Inc.  All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ */
+/ {
+	bpmp_i2c {
+		spmic@3c {
+			/* Low battery falling threshold voltage */
+			/* 0 = 2.7V / 1 = 2.8V / ...	*/
+			/* 4 = 3.1V / 7 = 3.4V		*/
+			maxim,low-battery-threshold = <4>;
+
+			/* FPS CID4 = 0x58 */
+			regulators {
+				sd0 {
+					regulator-name = "vddio-ddr";
+					regulator-boot-on;
+					regulator-always-on;
+					maxim,active-fps-source = <MAX77620_FPS_SRC_DEF>;
+					maxim,active-fps-power-up-slot = <6>;
+					maxim,active-fps-power-down-slot = <2>;
+				};
+				sd1 {
+					regulator-name = "vreg_rdrvr_1v5";
+					regulator-min-microvolt = <1500000>;
+					regulator-max-microvolt = <1500000>;
+					regulator-always-on;
+					regulator-boot-on;
+					maxim,active-fps-source = <MAX77620_FPS_SRC_DEF>;
+					maxim,active-fps-power-up-slot = <4>;
+					maxim,active-fps-power-down-slot = <1>;
+				};
+				sd2 {
+					regulator-name = "vdd-1v8";
+					regulator-min-microvolt = <1800000>;
+					regulator-max-microvolt = <1800000>;
+					regulator-always-on;
+					regulator-boot-on;
+					maxim,active-fps-source = <MAX77620_FPS_SRC_DEF>;
+					maxim,active-fps-power-up-slot = <0>;
+					maxim,active-fps-power-down-slot = <7>;
+				};
+				sd3 {
+					regulator-name = "spmic-sd3";
+					regulator-min-microvolt = <2600000>;
+					regulator-max-microvolt = <2600000>;
+					/delete-property/ regulator-always-on;
+					/delete-property/ regulator-boot-on;
+					maxim,active-fps-source = <MAX77620_FPS_SRC_NONE>;
+					maxim,active-fps-power-up-slot = <7>;
+					maxim,active-fps-power-down-slot = <1>;
+				};
+				ldo0 {
+					regulator-name = "vreg_serdes_1v8";
+					regulator-min-microvolt = <1800000>;
+					regulator-max-microvolt = <1800000>;
+					/delete-property/ regulator-always-on;
+					/delete-property/ regulator-boot-on;
+					maxim,active-fps-source = <MAX77620_FPS_SRC_NONE>;
+					maxim,active-fps-power-up-slot = <4>;
+					maxim,active-fps-power-down-slot = <3>;
+				};
+				ldo1 {
+					regulator-name = "vreg_discharge_1v5";
+					regulator-min-microvolt = <1500000>;
+					regulator-max-microvolt = <1500000>;
+					regulator-always-on;
+					regulator-boot-on;
+					maxim,active-fps-source = <MAX77620_FPS_SRC_DEF>;
+					maxim,active-fps-power-up-slot = <6>;
+					maxim,active-fps-power-down-slot = <2>;
+				};
+				ldo2 {
+					regulator-name = "vddio-3v3";
+					regulator-min-microvolt = <3300000>;
+					regulator-max-microvolt = <3300000>;
+					regulator-always-on;
+					regulator-boot-on;
+					maxim,active-fps-source = <MAX77620_FPS_SRC_DEF>;
+					maxim,active-fps-power-up-slot = <7>;
+					maxim,active-fps-power-down-slot = <1>;
+				};
+				ldo3 {
+					regulator-name = "spmic-ldo3";
+					/delete-property/ regulator-always-on;
+					/delete-property/ regulator-boot-on;
+					maxim,active-fps-source = <MAX77620_FPS_SRC_NONE>;
+				};
+				ldo4 {
+					regulator-name = "vdd-rtc";
+					regulator-min-microvolt = <1000000>;
+					regulator-max-microvolt = <1000000>;
+					regulator-always-on;
+					regulator-boot-on;
+					maxim,active-fps-source = <MAX77620_FPS_SRC_DEF>;
+					maxim,active-fps-power-up-slot = <1>;
+					maxim,active-fps-power-down-slot = <7>;
+				};
+				ldo5 {
+					regulator-name = "vreg-serdes-2v5";
+					regulator-min-microvolt = <2500000>;
+					regulator-max-microvolt = <2500000>;
+					regulator-boot-on;
+					maxim,active-fps-source = <MAX77620_FPS_SRC_NONE>;
+				};
+				ldo6 {
+					regulator-name = "soc_vid_oe";
+					regulator-min-microvolt = <1800000>;
+					regulator-max-microvolt = <1800000>;
+					maxim,active-fps-source = <MAX77620_FPS_SRC_NONE>;
+				};
+				ldo7 {
+					regulator-name = "vreg_hdmi_1v05";
+					regulator-min-microvolt = <1050000>;
+					regulator-max-microvolt = <1050000>;
+					regulator-always-on;
+					regulator-boot-on;
+					maxim,active-fps-source = <MAX77620_FPS_SRC_DEF>;
+					maxim,active-fps-power-up-slot = <6>;
+					maxim,active-fps-power-down-slot = <1>;
+				};
+				ldo8 {
+					regulator-name = "vreg_pex_1v05";
+					regulator-min-microvolt = <1050000>;
+					regulator-max-microvolt = <1050000>;
+					regulator-always-on;
+					regulator-boot-on;
+					maxim,active-fps-source = <MAX77620_FPS_SRC_NONE>;
+				};
+			};
+		};
+	};
+
+	/* delete all NVIDIA defined fixed regulators */
+	/delete-node/ fixed-regulators;
+	fixed-regulators {
+		compatible = "simple-bus";
+		device_type = "fixed-regulators";
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		/* 70pin_CONN_PWR_ENABLE gpio pin */
+		wearable_pwr_enable: wearable_pwr_enable {
+			compatible = "regulator-fixed";
+			status = "okay";
+			regulator-name = "wearable_pwr_enable";
+			/* varies depending on battery voltage */
+			regulator-min-microvolt = <3800000>;
+			regulator-max-microvolt = <3800000>;
+			enable-active-high;
+			regulator-boot-on;
+			gpio = <&tegra_main_gpio TEGRA_MAIN_GPIO(N, 1) 0>;
+		};
+		/* 5V_BST_EN gpio pin */
+		fan_boost_5v: fan_boost_5v {
+			compatible = "regulator-fixed";
+			status = "okay";
+			regulator-name = "fan_boost_5v";
+			regulator-min-microvolt = <5000000>;
+			regulator-max-microvolt = <5000000>;
+			enable-active-high;
+			gpio = <&tegra_aon_gpio TEGRA_AON_GPIO(AA, 3) 0>;
+		};
+		/* PS_VDD_FAN_ENABLE gpio pin */
+		fan_enable: fan_enable {
+			compatible = "regulator-fixed";
+			status = "okay";
+			regulator-name = "fan_enable";
+			regulator-min-microvolt = <5000000>;
+			regulator-max-microvolt = <5000000>;
+			enable-active-high;
+			gpio = <&tegra_aon_gpio TEGRA_AON_GPIO(U, 0) 0>;
+			vin-supply = <&fan_boost_5v>;
+		};
+		/* VREG_SYS_3V3 - TPS630252YFFR */
+		vreg_sys_3p3v: vreg_sys_3p3v {
+			compatible = "regulator-fixed";
+			status = "okay";
+			regulator-name = "vreg_sys_3p3v";
+			regulator-min-microvolt = <3300000>;
+			regulator-max-microvolt = <3300000>;
+			/* VREG_AOHV_3V3 - always on */
+			vin-supply = <&spmic_ldo2>;
+			regulator-always-on;
+		};
+		/* VSYS */
+		battery_reg: battery_reg {
+			compatible = "regulator-fixed";
+			regulator-name = "vdd-ac-bat";
+			regulator-min-microvolt = <5000000>;
+			regulator-max-microvolt = <5000000>;
+			regulator-always-on;
+		};
+		/* VREG_OTG_5V0 - TPS61253 */
+		vdd_usb0_5v: vdd_usb0_5v {
+			compatible = "regulator-fixed";
+			regulator-name = "vdd-usb0-5v";
+			regulator-min-microvolt = <5000000>;
+			regulator-max-microvolt = <5000000>;
+			enable-active-high;
+			/* VREG_IO_1V8 */
+			vin-supply = <&spmic_sd2>;
+			/* Always on */
+			/delete-property/ gpio;
+			regulator-always-on;
+			regulator-boot-on;
+		};
+		/* vdd_1v8_ap - VREG_AP_1V8 - TPS22925 */
+		vdd_1v8_ap: vdd_1v8_ap {
+			compatible = "regulator-fixed";
+			regulator-name = "vdd-1v8-ap";
+			regulator-min-microvolt = <1800000>;
+			regulator-max-microvolt = <1800000>;
+			regulator-always-on;
+			regulator-boot-on;
+			vin-supply = <&spmic_sd2>;
+		};
+		/* VREG_BLE_1V8 - LP5907UVX-1.8/NOPB */
+		vreg_ble_1v8: vreg_ble_1v8 {
+			compatible = "regulator-fixed";
+			status = "okay";
+			regulator-name = "vreg_ble_1v8";
+			regulator-min-microvolt = <1800000>;
+			regulator-max-microvolt = <1800000>;
+			/* vreg_sys_3p3v */
+			vin-supply = <&vreg_sys_3p3v>;
+			regulator-always-on;
+			regulator-boot-on;
+		};
+	};
+
+	pmc-iopower {
+		iopower-ao-hv-supply = <&vdd_1v8_ap>;
+		vddio-ao-hv-supply = <&vdd_1v8_ap>;
+
+		/delete-property/ iopower-sdmmc1-hv-supply;
+		/delete-property/ iopower-sdmmc2-hv-supply;
+		/delete-property/ iopower-sdmmc3-hv-supply;
+		/delete-property/ iopower-sdmmc4-supply;
+
+		/delete-property/ vddio-sdmmc1-hv-supply;
+		/delete-property/ vddio-sdmmc2-hv-supply;
+		/delete-property/ vddio-sdmmc3-hv-supply;
+		/delete-property/ vddio-sdmmc4-supply;
+	};
+
+	i2c@3160000 {
+		ina3221x_40: ina3221x@40 {
+			channel@0 {
+				ti,rail-name = "VDD_SYS_GPU";
+				ti,shunt-resistor-mohm = <10>;
+			};
+			channel@1 {
+				ti,rail-name = "VDD_SYS_SOC";
+				ti,shunt-resistor-mohm = <10>;
+			};
+			channel@2 {
+				ti,rail-name = "VDD_4V0_WIFI";
+				ti,shunt-resistor-mohm = <56>;
+			};
+		};
+		ina3221x_41: ina3221x@41 {
+			channel@0 {
+				ti,rail-name = "VDD_SYS_WEARABLE";
+				ti,shunt-resistor-mohm = <5>;
+			};
+			channel@1 {
+				ti,rail-name = "VDD_SYS_CPU";
+				ti,shunt-resistor-mohm = <10>;
+			};
+			channel@2 {
+				ti,rail-name = "VDD_SYS_DDR";
+				ti,shunt-resistor-mohm = <10>;
+			};
+		};
+		/delete-node/ ina3221x@42;
+		/delete-node/ ina3221x@43;
+		/delete-node/ gpio@74;
+		/delete-node/ gpio@77;
+		/delete-node/ gpio@21;
+		/delete-node/ tps65132@3e;
+	};
+
+	xudc@3550000 {
+		avdd-usb-supply = <&vreg_sys_3p3v>;
+		dvdd-pex-supply = <&spmic_ldo8>;
+		hvdd-pex-supply = <&vdd_1v8_ap>;
+		dvdd-pex-pll-supply = <&spmic_ldo8>;
+		hvdd-pex-pll-supply = <&vdd_1v8_ap>;
+	};
+
+	xhci@3530000 {
+		avddio_usb-supply = <&vreg_sys_3p3v>;
+	};
+
+	pinctrl@3520000 {
+		vbus-0-supply = <&battery_reg>;
+		vbus-1-supply = <&battery_reg>;
+		vbus-2-supply = <&battery_reg>;
+		vbus-3-supply = <&battery_reg>;
+		vddio-hsic-supply = <&battery_reg>;
+		avdd_usb-supply = <&vreg_sys_3p3v>;
+		vclamp_usb-supply = <&vdd_1v8_ap>;
+		avdd_pll_erefeut-supply = <&vdd_1v8_ap>;
+	};
+
+	ufshci@2450000 {
+		vddio-ufs-supply = <&vreg_sys_3p3v>;
+		vddio-ufs-ap-supply = <&vdd_1v8_ap>;
+	};
+
+	ether_qos@2490000 {
+		/delete-property/ vddio_sys_enet_bias-supply;
+		/delete-property/ vddio_enet-supply;
+		/delete-property/ phy_vdd_1v8-supply;
+		/delete-property/ phy_ovdd_rgmii-supply;
+		/delete-property/ phy_pllvdd-supply;
+	};
+
+	sdhci@3460000 {
+		/delete-property/ vqmmc-supply;
+		/delete-property/ vmmc-supply;
+	};
+
+	sdhci@3440000 {
+		/delete-property/ vqmmc-supply;
+		/delete-property/ vmmc-supply;
+	};
+
+	sdhci@3420000 {
+		/delete-property/ vqmmc-supply;
+		/delete-property/ vmmc-supply;
+	};
+
+	sdhci@3400000 {
+		/delete-property/ vqmmc-supply;
+		/delete-property/ vmmc-supply;
+	};
+
+	host1x {
+		nvdisplay@15200000 {
+			/delete-property/ avdd_lcd-supply;
+			/delete-property/ dvdd_lcd-supply;
+			/delete-property/ avdd_dsi_csi-supply;
+			/delete-property/ outp-supply;
+			/delete-property/ outn-supply;
+			/delete-property/ vdd_lcd_bl-supply;
+			/delete-property/ vdd_lcd_bl_en-supply;
+			/delete-property/ avdd_hdmi-supply;
+			/delete-property/ avdd_hdmi_pll-supply;
+
+			vdd-dp-pwr-supply = <&spmic_ldo7>;
+			avdd-dp-pll-supply = <&vdd_1v8_ap>;
+			vdd-edp-sec-mode-supply = <&vdd_1v8_ap>;
+			vdd-dp-pad-supply = <&vdd_1v8_ap>;
+			vdd_hdmi_5v0-supply = <&battery_reg>;
+		};
+		nvdisplay@15210000 {
+			/delete-property/ avdd_hdmi-supply;
+			/delete-property/ avdd_hdmi_pll-supply;
+
+			vdd-dp-pwr-supply = <&spmic_ldo7>;
+			avdd-dp-pll-supply = <&vdd_1v8_ap>;
+			vdd-edp-sec-mode-supply = <&vdd_1v8_ap>;
+			vdd-dp-pad-supply = <&vdd_1v8_ap>;
+			vdd_hdmi_5v0-supply = <&battery_reg>;
+		};
+	};
+
+	plugin-manager {
+		/delete-node/ fragment-sdwake-p3310-1000-300;
+		/delete-node/ fragement-pmon-p3310-1000-300;
+		/delete-node/ fragement-pmon-p3310-1000-800;
+		/delete-node/ fragment-p3310-c03;
+		/delete-node/ fragement-pmon-p3310-1000-800;
+		/delete-node/ fragment-devslp@0;
+		/delete-node/ fragment-p3310-c00-comm;
+		/delete-node/ fragment-p3310-c00-pmic;
+		/delete-node/ fragment-p3310-c01;
+		/delete-node/ fragment-p3310-c03;
+		/delete-node/ fragment-p3310-c00-comm;
+		/delete-node/ fragment-e3320-a01@1;
+	};
+};

@@ -1,0 +1,994 @@
+/*
+ * tegra186-phaedra-leds.dtsi
+ *
+ * Device tree entries for phaedra LEDs. Contains different current
+ * settings for different flex bin types.
+ *
+ * Copyright (c) 2017, Magic Leap, Inc.  All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ */
+
+
+/ {
+	i2c@c240000 {
+		leds-standby-pattern =
+		[07 1F 3B 01 FF 01 C0 00 15 00 2A 01 30 00 8C 00 43 9C 00
+		40 00 9C 01 E0 0C 1C 95 48 11 48 12 48 12 48 12
+		48 12 5A 05 5B 01 74 00 74 00 74 00 74 00 5A 00
+		5A 00 E0 0C 05 FF 10 F2 4C 00 A0 12 C0 00 9C 02
+		E0 80 14 D1 74 00 74 00 5A 00 74 00 74 00 5A 00
+		5A 01 74 00 74 00 74 00 74 00 5A 00 74 00 74 00
+		5A 00 47 04 74 00 74 00 53 07 57 06 E0 80 05 FF
+		16 C1 A0 17 C0 00 9C 03 E0 80 12 DD 47 13 49 12
+		49 12 49 11 47 13 5B 05 74 00 74 00 5A 00 74 00
+		74 00 5A 00 E0 80 05 FF 20 7D A0 0F C0 00 00 00
+		00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+		00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ];
+/* ML BIN VER 1 */
+		lp5523-led-0-s1ps1qs1 {
+			status = "disabled";
+			compatible = "ti,lp55231";
+			reg = <0x32>;
+			clock-mode = /bits/ 8 <1>;
+
+			chan0 {
+				chan-name = "d1-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan1 {
+				chan-name = "d1-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan2 {
+				chan-name = "d2-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan3 {
+				chan-name = "d2-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan4 {
+				chan-name = "d3-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan5 {
+				chan-name = "d3-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan6 {
+				chan-name = "d1-r";
+				led-cur = /bits/ 8 <18>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan7 {
+				chan-name = "d2-r";
+				led-cur = /bits/ 8 <18>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan8 {
+				chan-name = "d3-r";
+				led-cur = /bits/ 8 <18>;
+				max-cur = /bits/ 8 <100>;
+			};
+		};
+
+		lp5523-led-1-s1ps1qs1 {
+			status = "disabled";
+			compatible = "ti,lp55231";
+			reg = <0x33>;
+			clock-mode = /bits/ 8 <1>;
+
+			chan0 {
+				chan-name = "d4-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan1 {
+				chan-name = "d4-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan2 {
+				chan-name = "d5-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan3 {
+				chan-name = "d5-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan4 {
+				chan-name = "d6-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan5 {
+				chan-name = "d6-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan6 {
+				chan-name = "d4-r";
+				led-cur = /bits/ 8 <18>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan7 {
+				chan-name = "d5-r";
+				led-cur = /bits/ 8 <18>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan8 {
+				chan-name = "d6-r";
+				led-cur = /bits/ 8 <18>;
+				max-cur = /bits/ 8 <100>;
+			};
+		};
+
+		lp5523-led-2-s1ps1qs1 {
+			status = "disabled";
+			compatible = "ti,lp55231";
+			reg = <0x34>;
+			clock-mode = /bits/ 8 <1>;
+
+			chan0 {
+				chan-name = "d7-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan1 {
+				chan-name = "d7-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan2 {
+				chan-name = "d8-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan3 {
+				chan-name = "d8-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan4 {
+				chan-name = "d9-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan5 {
+				chan-name = "d9-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan6 {
+				chan-name = "d7-r";
+				led-cur = /bits/ 8 <18>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan7 {
+				chan-name = "d8-r";
+				led-cur = /bits/ 8 <18>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan8 {
+				chan-name = "d9-r";
+				led-cur = /bits/ 8 <18>;
+				max-cur = /bits/ 8 <100>;
+			};
+		};
+
+/* ML BIN VER 2 */
+		lp5523-led-0-s2ps1qs1 {
+			status = "disabled";
+			compatible = "ti,lp55231";
+			reg = <0x32>;
+			clock-mode = /bits/ 8 <1>;
+
+			chan0 {
+				chan-name = "d1-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan1 {
+				chan-name = "d1-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan2 {
+				chan-name = "d2-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan3 {
+				chan-name = "d2-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan4 {
+				chan-name = "d3-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan5 {
+				chan-name = "d3-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan6 {
+				chan-name = "d1-r";
+				led-cur = /bits/ 8 <18>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan7 {
+				chan-name = "d2-r";
+				led-cur = /bits/ 8 <18>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan8 {
+				chan-name = "d3-r";
+				led-cur = /bits/ 8 <18>;
+				max-cur = /bits/ 8 <100>;
+			};
+		};
+
+		lp5523-led-1-s2ps1qs1 {
+			status = "disabled";
+			compatible = "ti,lp55231";
+			reg = <0x33>;
+			clock-mode = /bits/ 8 <1>;
+
+			chan0 {
+				chan-name = "d4-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan1 {
+				chan-name = "d4-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan2 {
+				chan-name = "d5-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan3 {
+				chan-name = "d5-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan4 {
+				chan-name = "d6-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan5 {
+				chan-name = "d6-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan6 {
+				chan-name = "d4-r";
+				led-cur = /bits/ 8 <18>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan7 {
+				chan-name = "d5-r";
+				led-cur = /bits/ 8 <18>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan8 {
+				chan-name = "d6-r";
+				led-cur = /bits/ 8 <18>;
+				max-cur = /bits/ 8 <100>;
+			};
+		};
+
+		lp5523-led-2-s2ps1qs1 {
+			status = "disabled";
+			compatible = "ti,lp55231";
+			reg = <0x34>;
+			clock-mode = /bits/ 8 <1>;
+
+			chan0 {
+				chan-name = "d7-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan1 {
+				chan-name = "d7-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan2 {
+				chan-name = "d8-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan3 {
+				chan-name = "d8-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan4 {
+				chan-name = "d9-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan5 {
+				chan-name = "d9-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan6 {
+				chan-name = "d7-r";
+				led-cur = /bits/ 8 <18>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan7 {
+				chan-name = "d8-r";
+				led-cur = /bits/ 8 <18>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan8 {
+				chan-name = "d9-r";
+				led-cur = /bits/ 8 <18>;
+				max-cur = /bits/ 8 <100>;
+			};
+		};
+
+/* ML BIN VER 3 */
+		lp5523-led-0-s2ps2qs2 {
+			status = "disabled";
+			compatible = "ti,lp55231";
+			reg = <0x32>;
+			clock-mode = /bits/ 8 <1>;
+
+			chan0 {
+				chan-name = "d1-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan1 {
+				chan-name = "d1-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan2 {
+				chan-name = "d2-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan3 {
+				chan-name = "d2-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan4 {
+				chan-name = "d3-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan5 {
+				chan-name = "d3-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan6 {
+				chan-name = "d1-r";
+				led-cur = /bits/ 8 <19>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan7 {
+				chan-name = "d2-r";
+				led-cur = /bits/ 8 <19>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan8 {
+				chan-name = "d3-r";
+				led-cur = /bits/ 8 <19>;
+				max-cur = /bits/ 8 <100>;
+			};
+		};
+
+		lp5523-led-1-s2ps2qs2 {
+			status = "disabled";
+			compatible = "ti,lp55231";
+			reg = <0x33>;
+			clock-mode = /bits/ 8 <1>;
+
+			chan0 {
+				chan-name = "d4-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan1 {
+				chan-name = "d4-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan2 {
+				chan-name = "d5-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan3 {
+				chan-name = "d5-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan4 {
+				chan-name = "d6-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan5 {
+				chan-name = "d6-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan6 {
+				chan-name = "d4-r";
+				led-cur = /bits/ 8 <19>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan7 {
+				chan-name = "d5-r";
+				led-cur = /bits/ 8 <19>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan8 {
+				chan-name = "d6-r";
+				led-cur = /bits/ 8 <19>;
+				max-cur = /bits/ 8 <100>;
+			};
+		};
+
+		lp5523-led-2-s2ps2qs2 {
+			status = "disabled";
+			compatible = "ti,lp55231";
+			reg = <0x34>;
+			clock-mode = /bits/ 8 <1>;
+
+			chan0 {
+				chan-name = "d7-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan1 {
+				chan-name = "d7-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan2 {
+				chan-name = "d8-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan3 {
+				chan-name = "d8-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan4 {
+				chan-name = "d9-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan5 {
+				chan-name = "d9-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan6 {
+				chan-name = "d7-r";
+				led-cur = /bits/ 8 <19>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan7 {
+				chan-name = "d8-r";
+				led-cur = /bits/ 8 <19>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan8 {
+				chan-name = "d9-r";
+				led-cur = /bits/ 8 <19>;
+				max-cur = /bits/ 8 <100>;
+			};
+		};
+
+/* ML BIN VER 4 */
+		lp5523-led-0-s1ps2qs2 {
+			status = "disabled";
+			compatible = "ti,lp55231";
+			reg = <0x32>;
+			clock-mode = /bits/ 8 <1>;
+
+			chan0 {
+				chan-name = "d1-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan1 {
+				chan-name = "d1-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan2 {
+				chan-name = "d2-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan3 {
+				chan-name = "d2-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan4 {
+				chan-name = "d3-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan5 {
+				chan-name = "d3-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan6 {
+				chan-name = "d1-r";
+				led-cur = /bits/ 8 <20>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan7 {
+				chan-name = "d2-r";
+				led-cur = /bits/ 8 <20>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan8 {
+				chan-name = "d3-r";
+				led-cur = /bits/ 8 <20>;
+				max-cur = /bits/ 8 <100>;
+			};
+		};
+
+		lp5523-led-1-s1ps2qs2 {
+			status = "disabled";
+			compatible = "ti,lp55231";
+			reg = <0x33>;
+			clock-mode = /bits/ 8 <1>;
+
+			chan0 {
+				chan-name = "d4-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan1 {
+				chan-name = "d4-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan2 {
+				chan-name = "d5-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan3 {
+				chan-name = "d5-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan4 {
+				chan-name = "d6-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan5 {
+				chan-name = "d6-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan6 {
+				chan-name = "d4-r";
+				led-cur = /bits/ 8 <20>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan7 {
+				chan-name = "d5-r";
+				led-cur = /bits/ 8 <20>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan8 {
+				chan-name = "d6-r";
+				led-cur = /bits/ 8 <20>;
+				max-cur = /bits/ 8 <100>;
+			};
+		};
+
+		lp5523-led-2-s1ps2qs2 {
+			status = "disabled";
+			compatible = "ti,lp55231";
+			reg = <0x34>;
+			clock-mode = /bits/ 8 <1>;
+
+			chan0 {
+				chan-name = "d7-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan1 {
+				chan-name = "d7-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan2 {
+				chan-name = "d8-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan3 {
+				chan-name = "d8-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan4 {
+				chan-name = "d9-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan5 {
+				chan-name = "d9-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan6 {
+				chan-name = "d7-r";
+				led-cur = /bits/ 8 <20>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan7 {
+				chan-name = "d8-r";
+				led-cur = /bits/ 8 <20>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan8 {
+				chan-name = "d9-r";
+				led-cur = /bits/ 8 <20>;
+				max-cur = /bits/ 8 <100>;
+			};
+		};
+
+/* ML BIN VER 5 */
+		lp5523-led-0-s1pt1qt1 {
+			status = "disabled";
+			compatible = "ti,lp55231";
+			reg = <0x32>;
+			clock-mode = /bits/ 8 <1>;
+
+			chan0 {
+				chan-name = "d1-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan1 {
+				chan-name = "d1-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan2 {
+				chan-name = "d2-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan3 {
+				chan-name = "d2-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan4 {
+				chan-name = "d3-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan5 {
+				chan-name = "d3-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan6 {
+				chan-name = "d1-r";
+				led-cur = /bits/ 8 <15>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan7 {
+				chan-name = "d2-r";
+				led-cur = /bits/ 8 <15>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan8 {
+				chan-name = "d3-r";
+				led-cur = /bits/ 8 <15>;
+				max-cur = /bits/ 8 <100>;
+			};
+		};
+
+		lp5523-led-1-s1pt1qt1 {
+			status = "disabled";
+			compatible = "ti,lp55231";
+			reg = <0x33>;
+			clock-mode = /bits/ 8 <1>;
+
+			chan0 {
+				chan-name = "d4-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan1 {
+				chan-name = "d4-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan2 {
+				chan-name = "d5-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan3 {
+				chan-name = "d5-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan4 {
+				chan-name = "d6-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan5 {
+				chan-name = "d6-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan6 {
+				chan-name = "d4-r";
+				led-cur = /bits/ 8 <15>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan7 {
+				chan-name = "d5-r";
+				led-cur = /bits/ 8 <15>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan8 {
+				chan-name = "d6-r";
+				led-cur = /bits/ 8 <15>;
+				max-cur = /bits/ 8 <100>;
+			};
+		};
+
+		lp5523-led-2-s1pt1qt1 {
+			status = "disabled";
+			compatible = "ti,lp55231";
+			reg = <0x34>;
+			clock-mode = /bits/ 8 <1>;
+
+			chan0 {
+				chan-name = "d7-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan1 {
+				chan-name = "d7-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan2 {
+				chan-name = "d8-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan3 {
+				chan-name = "d8-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan4 {
+				chan-name = "d9-g";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan5 {
+				chan-name = "d9-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan6 {
+				chan-name = "d7-r";
+				led-cur = /bits/ 8 <15>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan7 {
+				chan-name = "d8-r";
+				led-cur = /bits/ 8 <15>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan8 {
+				chan-name = "d9-r";
+				led-cur = /bits/ 8 <15>;
+				max-cur = /bits/ 8 <100>;
+			};
+		};
+/* ML BIN VER 6 */
+		lp5523-led-0-s2pt1qt1 {
+			status = "disabled";
+			compatible = "ti,lp55231";
+			reg = <0x32>;
+			clock-mode = /bits/ 8 <1>;
+
+			chan0 {
+				chan-name = "d1-g";
+				led-cur = /bits/ 8 <46>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan1 {
+				chan-name = "d1-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan2 {
+				chan-name = "d2-g";
+				led-cur = /bits/ 8 <46>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan3 {
+				chan-name = "d2-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan4 {
+				chan-name = "d3-g";
+				led-cur = /bits/ 8 <46>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan5 {
+				chan-name = "d3-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan6 {
+				chan-name = "d1-r";
+				led-cur = /bits/ 8 <15>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan7 {
+				chan-name = "d2-r";
+				led-cur = /bits/ 8 <15>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan8 {
+				chan-name = "d3-r";
+				led-cur = /bits/ 8 <15>;
+				max-cur = /bits/ 8 <100>;
+			};
+		};
+
+		lp5523-led-1-s2pt1qt1 {
+			status = "disabled";
+			compatible = "ti,lp55231";
+			reg = <0x33>;
+			clock-mode = /bits/ 8 <1>;
+
+			chan0 {
+				chan-name = "d4-g";
+				led-cur = /bits/ 8 <46>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan1 {
+				chan-name = "d4-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan2 {
+				chan-name = "d5-g";
+				led-cur = /bits/ 8 <46>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan3 {
+				chan-name = "d5-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan4 {
+				chan-name = "d6-g";
+				led-cur = /bits/ 8 <46>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan5 {
+				chan-name = "d6-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan6 {
+				chan-name = "d4-r";
+				led-cur = /bits/ 8 <15>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan7 {
+				chan-name = "d5-r";
+				led-cur = /bits/ 8 <15>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan8 {
+				chan-name = "d6-r";
+				led-cur = /bits/ 8 <15>;
+				max-cur = /bits/ 8 <100>;
+			};
+		};
+
+		lp5523-led-2-s2pt1qt1 {
+			status = "disabled";
+			compatible = "ti,lp55231";
+			reg = <0x34>;
+			clock-mode = /bits/ 8 <1>;
+
+			chan0 {
+				chan-name = "d7-g";
+				led-cur = /bits/ 8 <46>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan1 {
+				chan-name = "d7-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan2 {
+				chan-name = "d8-g";
+				led-cur = /bits/ 8 <46>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan3 {
+				chan-name = "d8-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan4 {
+				chan-name = "d9-g";
+				led-cur = /bits/ 8 <46>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan5 {
+				chan-name = "d9-b";
+				led-cur = /bits/ 8 <48>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan6 {
+				chan-name = "d7-r";
+				led-cur = /bits/ 8 <15>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan7 {
+				chan-name = "d8-r";
+				led-cur = /bits/ 8 <15>;
+				max-cur = /bits/ 8 <100>;
+			};
+			chan8 {
+				chan-name = "d9-r";
+				led-cur = /bits/ 8 <15>;
+				max-cur = /bits/ 8 <100>;
+			};
+		};
+	};
+};

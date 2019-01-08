@@ -1,0 +1,17 @@
+Magic Leap six degrees of freedom driver
+
+Implements a 6DOF controller driver that communicates with
+SPE over mailbox and with bus client drivers controlling
+different peripherals of 6DOF sub-system.
+
+Required properties:
+
+- compatible	: must be "ml,aon-6dof"
+- mboxes	: IVC channel
+
+Example:
+
+aon_6dof {
+	compatible = "ml,aon-6dof";
+	mboxes = <&aon 5>;
+};

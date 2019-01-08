@@ -1,0 +1,72 @@
+/*
+ * tegra186-quill-p3310-1000-c03-00-dp-primary.dts
+ * Device Tree file for Quill to enable single head
+ * only with DP as primary display
+ *
+ * Copyright (c) 2017, NVIDIA CORPORATION.  All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ */
+
+#include "tegra186-quill-p3310-1000-c03-00-base.dts"
+
+/ {
+    nvidia,dtsfilename = __FILE__;
+
+    host1x {
+        nvdisplay@15200000 {
+            status = "okay";
+            nvidia,dc-or-node = "/host1x/sor";
+        };
+        sor {
+            bootloader-status = "okay";
+            status = "okay";
+            dp-display {
+                bootloader-status = "okay";
+                status = "okay";
+            };
+        };
+        dpaux@155c0000 {
+            bootloader-status = "okay";
+            status = "okay";
+        };
+        dpaux@15040000 {
+            bootloader-status = "disabled";
+            status = "disabled";
+        };
+        nvdisplay@15210000 {
+            status = "disabled";
+        };
+        sor1 {
+            bootloader-status = "disabled";
+            status = "disabled";
+            dp-display {
+                bootloader-status = "disabled";
+                status = "disabled";
+            };
+            hdmi-display {
+                    bootloader-status = "disabled";
+                    status = "disabled";
+            };
+        };
+        nvdisplay@15220000 {
+            status = "disabled";
+        };
+    };
+
+    plugin-manager {
+        /delete-node/ fragment-e3320-dp;
+        /delete-node/ fragment-e3320-a00@1;
+        /delete-node/ fragment-e3320-a01@1;
+    };
+
+};
+

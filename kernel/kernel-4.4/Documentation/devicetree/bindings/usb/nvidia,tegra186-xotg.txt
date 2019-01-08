@@ -1,0 +1,54 @@
+Device tree binding for NVIDIA Tegra XUSB OTG Controller Driver (XOTG)
+============================
+
+The Tegra XOTG driver works with Tegra host and device controller drivers to
+provide OTG2.0 (OTG3.0 supported, but not implemented yet in SW)
+functionalities. The host and device controller drivers must both contain
+otg-controller phandle pointing to XOTG node. Host or device driver only
+depends on XOTG driver. If a system has OTG port but either XHCI or XUDC
+is not enabled, the port still works fine as long as XOTG is enabled. In
+other words, either one or both XHCI and XUDC should work fine as long as
+XOTG is enabled.
+
+Required properties:
+--------------------
+ - compatible: For Tegra186, must contain "nvidia,tegra186-xotg".
+
+Required properties for Tegra186:
+---------------------------------
+ - interrupts: interrupt line for XOTG
+ - phys: Must contain at least an entry for USB2.0 phy for the OTG port, and
+   at most an additional entry for USB3.0 phy if the OTG port is USB3.0.
+   See ../phy/phy-bindings.txt for details.
+ - phy-names: Should include at least an entry for USB2.0 phy and at most
+   another entry for USB3.0 phy.
+   Names must be "otg-usb2", and "otg-usb3" if the port supports SuperSpeed.
+   - "otg-usb3" phy, SuperSpeed (SSTX+/SSTX-/SSRX+/SSRX-) data lines
+   - "otg-usb2" phy, USB 2.0 (D+/D-) data lines
+ - extcon-cables: Must contains 2 cables for ID and VBUS detection.
+   See ../extcon/extcon-gpio-states.txt for details.
+ - extcon-cable-names: Must be "id" and "vbus".
+
+Optional properties:
+--------------------
+ - otg-rev: See generic.txt for details
+ - hnp-disable: See generic.txt for details
+ - adp-disable: See generic.txt for details
+ - srp-disable: See generic.txt for details
+ - rsp-disable: See generic.txt for details
+
+Example:
+--------
+	xotg {
+		compatible = "nvidia,tegra186-xotg";
+        interrupts = <0 167 0x4>;
+		phys = <&padctl TEGRA_PADCTL_UTMI_P(0)>, /* USB 3.0 micro-AB, J503 */
+			<&padctl TEGRA_PADCTL_USB3_P(1)>; /* USB 3.0 micro-AB, J503 */
+		phy-names = "otg-usb2", "otg-usb3";
+		extcon-cables = <&vbus_id_extcon 1>, <&vbus_id_extcon 0>;
+		extcon-cable-names = "id", "vbus";
+		#extcon-cells = <1>;
+
+        otg-rev = <0x0300>;
+        adp-disable;
+	};

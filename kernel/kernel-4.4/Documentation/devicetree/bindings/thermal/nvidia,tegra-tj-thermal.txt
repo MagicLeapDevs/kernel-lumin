@@ -1,0 +1,81 @@
+Tegra maximum (junction) temperature reporting (virtual) sensor
+
+This module reports the maximum SoC temperature (hottest point on the chip). It
+polls on the temperatures from existing sensor devices (thermal zones), adds a
+'hotspot offset' to the respective temperatures just polled, and, reports back
+the maximum of all those values.
+
+The participating zones and their respective hotspot offsets are configurable
+via device tree.
+
+This virtual sensor works completely on the polling mechanism supported by the
+thermal core, and, doesn't have any interrupts support.
+
+Required properties:
+- compatible: "nvidia,tegra-tj-thermal"
+- data: Is an array/list of 'thermal-zone-phandle, hotspot offset(in mC)' pairs.
+	There should exist at least one pair (two values) for a valid
+	temperature reading.
+
+Example:
+
+/ {
+	/* An example of bare bones thermal zone using tj-thermal virtual sensor
+	 */
+	tegra-tj {
+		status = "okay";
+		compatible = "nvidia,tegra-tj-thermal";
+		#thermal-sensor-cells = <1>;
+		data = <&CPU_zone 5000>;
+	};
+
+	thermal-zones {
+		Tj-therm {
+			polling-delay = <500>;
+			polling-passive-delay = <500>;
+			thermal-sensors = <&/tegra-tj 0>;
+		};
+	};
+};
+
+
+/ {
+	/* An example of Tj attached with a cooling device
+	 */
+	tegra-tj {
+		status = "okay";
+		compatible = "nvidia,tegra-tj-thermal";
+		#thermal-sensor-cells = <1>;
+		data = <&CPU_zone 5000>;
+	};
+
+	tj-cdev {
+		status = "okay";
+		cooling-min-state = <0>;
+		colling-max-state = <16>;
+		#cooling-cells = <2>;
+		cdev-type = "tj_test";
+	};
+
+	thermal-zones {
+		Tj-therm {
+			polling-delay = <500>;
+			polling-passive-delay = <500>;
+			thermal-sensors = <&/tegra-tj 0>;
+		};
+		trips {
+			trip1 {
+				.
+				.
+				.
+			};
+		};
+		cooling-maps {
+			map1 {
+				trip = <&trip1>;
+				cooling-device = <&tj-cdev 0 16>;
+				cdev-type = "tj_test";
+			};
+		};
+	};
+};

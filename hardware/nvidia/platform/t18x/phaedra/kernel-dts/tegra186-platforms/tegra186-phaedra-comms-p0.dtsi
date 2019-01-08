@@ -1,0 +1,27 @@
+/*
+ * tegra186-phaedra-comms.dtsi
+ *
+ * Main device tree for the phaedra product.
+ *
+ * Copyright (c) 2016, Magic Leap, Inc.  All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ */
+#include <dt-bindings/gpio/tegra-gpio.h>
+
+/ {
+	bcm4359: bcmdhd_pcie_wlan {
+		nv_path = "/system/etc/nvram_4359_p0.txt";
+	};
+
+	bluedroid_pm {
+		bluedroid_pm,ext-wake-gpio = <&tegra_main_gpio TEGRA_MAIN_GPIO(I, 5) 0>;
+	};
+};

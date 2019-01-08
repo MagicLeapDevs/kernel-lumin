@@ -1,0 +1,10 @@
+Magic Leap Gazell control driver
+
+Required properties:
+ - compatible          : Must contain "ml,mlgz_ctrl" for the magic leap Gazell driver
+
+Example:
+       gazell {
+               compatible = "ml,mlgz_ctrl";
+               status = "okay";
+       };

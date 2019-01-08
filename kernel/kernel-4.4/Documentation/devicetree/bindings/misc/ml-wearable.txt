@@ -1,0 +1,20 @@
+ML wearable parameters
+
+Required properties:
+ - compatible		: Must contain "ml,wearable" for the magic leap wearable device
+ - pwr-supply		: Power supply needed to power wearable.
+ - gpio_irq		: GPIO for interrupt to power pack.
+ - gpio_on_off		: GPIO for on-off signal to wearable.
+ - gpio_ap_int		: GPIO for interrupt to wearable.
+ - gpio_vsync_en	: GPIO to route VSYNC signal over headset jack when low.
+
+Example:
+	wearable {
+		compatible = "ml,wearable";
+		status = "okay";
+		pwr-supply = <&wearable_boost_4p8>;
+		gpio_irq = <&tegra_gpio TEGRA_GPIO(J, 7) GPIO_ACTIVE_HIGH>;
+		gpio_on_off = <&tegra_gpio TEGRA_GPIO(Y, 0) GPIO_ACTIVE_HIGH>;
+		gpio_ap_int = <&tegra_gpio TEGRA_GPIO(P, 3) GPIO_ACTIVE_HIGH>;
+		gpio_vsync_en = <&tegra_gpio TEGRA_GPIO(D, 2) GPIO_ACTIVE_LOW>;
+	};

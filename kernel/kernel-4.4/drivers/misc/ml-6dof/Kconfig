@@ -1,0 +1,12 @@
+comment "Magic Leap Six Degree Of Freedom Driver"
+
+config ML_6DOF
+	bool "Magic Leap six degrees of freedom"
+	depends on OF && I2C && SYSFS && TEGRA_AON
+	help
+	  This option enables support for Magic Leap
+	  six degree of freedom sub-system. It includes
+	  the main 6DOF controller driver and a number
+	  of i2c clients.
+
+source "drivers/misc/ml-6dof/raw/Kconfig"

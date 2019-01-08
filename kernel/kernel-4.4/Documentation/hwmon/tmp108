@@ -1,0 +1,38 @@
+Kernel driver tmp108
+====================
+
+Supported chips:
+  * Texas Instruments TMP108
+
+Description
+-----------
+
+The Texas Instruments TMP108 temperature sensor implements one temperature
+sensor.
+
+The driver provides support to set the bits in the configuration register.
+
+The device tree property "sensor-name" needs to be provided so multiple
+TMP108 sensors can be supported.
+
+The device tree property "skip-programming" can be used to skip programming
+the configuration register.
+
+The optional device tree property "temp-high" can be used to program the
+high temperature register.
+
+The optional device tree property "no-sleep" is used to keep the sensor in the
+current mode and not put it in shutdown mode when the system goes to sleep.
+
+The driver exposes sysfs-interface for temperatures: the temperature can
+be read from "temp", T-HIGH from "temp_high", and T-LOW from "temp-low".
+
+Example:
+	tmp108_batt_sensor: tmp108@48 {
+		compatible = "ti,tmp108";
+		#thermal-sensor-cells = <0>;
+		reg = <0x48>;
+		skip-programming;
+		sensor-name = "tmp108_batt";
+		temp-high = <70000>;
+	};

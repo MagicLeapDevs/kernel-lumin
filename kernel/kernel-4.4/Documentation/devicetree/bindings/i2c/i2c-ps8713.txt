@@ -1,0 +1,52 @@
+Parade Technologies PS8713 I2C Redriver parameters
+
+Required properties:
+ - compatible: must be "parade,ps8713".
+ - reg: I2C address.
+ - chan-name: In child node, "ch-a" or "ch-b".
+
+Optional properties in child nodes:
+ - ch-disable: Disable channel.
+ - rx-det-disable: Disable channel RX.Detect.
+ - auto-pwr-saving-disable: Disable automatic power saving.
+ - eq-level: Equalization level setting, values 0 - 6 for 4.5dB to 14.5dB.
+ - signal-det: Signal detector threshold adjust, values 0 to 7.
+ - idle-exit: Electrical idle exit time adjust, values 0 to 3.
+ - idle-enter: Electrical idle enter time adjust, values 0 to 3.
+ - input-term: Input termination adjust, values 0 for 48.5ohm or 7 for High Impedance.
+ - power-saving: Power saving mode wake up signal detector threshold adjust, values 0 to 7.
+ - tune-lfps-swing: Tune down LFPS swing, values 0 to 3.
+ - de-emphasis: De-emphasis select, values 0 to 3.
+ - output-ampl: Output amplitude select, values 0 to 7.
+ - output-term: Output termination adjust, values 0 for 48.5ohm or 7 for High Impedance.
+ - idle-time-switch: Idle time of the input signal to switch to power saving mode, values 0 to 3.
+
+Example:
+
+&i2c_6 {
+	status = "okay";
+	ps8713 {
+		compatible = "parade,ps8713";
+		reg = <0x29>;
+		chan-a {
+			rx-det-disable;
+			auto-pwr-saving-disable;
+			chan-name = "ch-a";
+			eq-level = <6>;
+			signal-det = <7>;
+			idle-exit = <3>;
+			idle-enter = <3>;
+			input-term = <7>;
+			power-saving = <7>;
+			tune-lfps-swing = <3>;
+			de-emphasis = <3>;
+			output-ampl = <7>;
+			output-term = <7>;
+			idle-time-switch = <3>;
+		};
+		chan-b {
+			chan-name = "ch-b";
+			ch-disable;
+		};
+	};
+};
