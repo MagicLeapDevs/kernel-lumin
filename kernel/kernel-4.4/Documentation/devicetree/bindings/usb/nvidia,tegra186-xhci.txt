@@ -1,0 +1,91 @@
+Device tree binding for NVIDIA Tegra XUSB host mode controller (XHCI)
+============================
+
+The Tegra xHCI controller complies to xHCI specifications which supports
+both USB 2.0 HighSpeed/FullSpeed/LowSpeed and USB 3.0 SuperSpeed protocols.
+
+Required properties:
+--------------------
+ - compatible: For Tegra186, must contain "nvidia,tegra186-xhci".
+ - mboxes: Must contain an entry for the XUSB mailbox channel.
+   See ../mailbox/mailbox.txt for details.
+ - mbox-names: Must include the following entries:
+   - xusb
+
+Required properties for Tegra186:
+---------------------------------
+ - avddio_usb-supply: 3.3V supply to USB 2.0 pads.
+ - avdd_pll_utmip-supply: 1.8V supply to UTMI PLL.
+ - hvdd_usb-supply: 1.8V supply to PEX USB 3.0 pads.
+
+ - phys: Must contain an entry for each entry in phy-names.
+   See ../phy/phy-bindings.txt for details.
+ - phy-names: Should include an entry for each PHY used by the controller.
+   Names must be of the form "<type>-<number>" where <type> is one of "utmi",
+   "hsic", "usb3", or "cdp" and <number> is a 0-based index.
+   On Tegra186, there may be up to:
+   - 3 USB3 PHYs, SuperSpeed (SSTX+/SSTX-/SSRX+/SSRX-) data lines
+   - 3 UTMI PHYs, USB 2.0 (D+/D-) data lines
+   - 1 HSIC PHYs, HSIC (DATA/STROBE) data lines
+   - 3 CDP PHYs, which is an abstraction type of PHY to support CDP (charging
+       downstream port) for each UTMI PHYs in the system
+
+Optional properties:
+--------------------
+ - nvidia,pmc-usb-wakes-disabled: set if platform doesn't support/require waking system from
+   suspend with USB events.
+ - extcon-cables: OTG support. Must contains an excon-cable entry which detects
+   USB ID pin. See ../extcon/extcon-gpio-states.txt for details.
+   When the extcon cable state is 1, OTG port will transition to host mode.
+ - extcon-cable-names: Must be "id".
+ - nvidia,boost_cpu_freq: Set the value to which CPU frequency will be boosted.
+   This is only the minimum frequency, DVFS can further scale up CPU frequency
+   based on the need and cpu load. CPU boost freq through PMQOS will be enabled
+   for xhci controller only when this field is a non-zero positive value. This
+   boost is applicable only for Bulk and Isoc transfers, other endpoints doesn't
+   need boost.
+   Example :
+   Before boosting on Quill-prod:
+     Output of "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq"
+     345600
+     2419200
+     2419200
+     345600
+     345600
+     345600
+   After boosting on QUill-prod: (nvidia,boost_cpu_freq = <800>)
+     Output of "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq"
+     806400
+     2419200
+     2419200
+     806400
+     806400
+     806400
+ - nvidia,boost_cpu_trigger: Minimum buffer length of the bulk or isoc transfers
+   beyond which we boost frequency. This field is applicable only if
+   "nvidia,boost_cpu_freq" > 0. This field should be > 16384(16KB), else driver
+   will use default 16384.
+
+Example:
+--------
+	xhci@3530000 {
+		compatible = "nvidia,tegra186-xhci";
+		mboxes = <&xusb_mbox>;
+		mbox-names = "xusb";
+		phys = <&padctl TEGRA_PADCTL_PHY_UTMI_P(0)>, /* USB 2.0 micro-AB, J20 */
+			<&padctl TEGRA_PADCTL_PHY_UTMI_P(1)>, /* USB 3.0 STD-A, J19 */
+			<&padctl TEGRA_PADCTL_PHY_USB3_P(1)>, /* USB 3.0 STD-A, J19 */
+			<&padctl TEGRA_PADCTL_PHY_CDP_P(1)>; /* CDP for J19 port */
+		phy-names = "utmi-0", "utmi-1", "usb3-1", "cdp-1";
+
+		avddio_usb-supply = <&spmic_sd3_3v3>;
+		avdd_pll_utmip-supply = <&spmic_sd2_1v8>;
+		hvdd_usb-supply =  <&spmic_sd2_1v8>;
+
+		extcon-cables = <&vbus_id_extcon 1>;
+		extcon-cable-names = "id";
+		#extcon-cells = <1>;
+
+		nvidia,boost_cpu_freq = <800>;
+		nvidia,boost_cpu_trigger = <18432>;
+	};

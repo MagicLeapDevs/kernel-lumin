@@ -1,0 +1,2 @@
+enable-jit
+allow_local_connections

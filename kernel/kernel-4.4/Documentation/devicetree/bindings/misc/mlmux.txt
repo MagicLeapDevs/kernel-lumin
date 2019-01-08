@@ -1,0 +1,23 @@
+ML Mux IPC protocol framework
+
+Simple binding that provides a connection between a controller
+and a client.
+
+* ML Mux controller
+Required property:
+- N/A
+
+Example:
+	mux: nrf52_i2c@66 {
+		...
+	};
+
+* ML Mux client
+Required property
+- mlmux: Phandle to the node of ML Mux controller.
+
+Example:
+	client {
+		...
+		mlmux = <&mux>;
+	};

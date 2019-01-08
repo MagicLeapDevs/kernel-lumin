@@ -1,0 +1,17 @@
+Mlmux adapter/AON client driver
+
+Implements a mlmux adapter to support mlmux client
+to read/write wearable data over the AON mailbox.
+
+Required properties:
+
+- compatible	: must be "ml,aon-wearable"
+- mboxes	: IVC channel
+
+Example:
+
+ml_mux2: aon_wearable {
+	compatible = "ml,aon-wearable";
+	mboxes = <&aon 5>;
+	status = "okay";
+};

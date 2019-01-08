@@ -1,0 +1,9 @@
+:LOGN
+clone
+capset
+unshare
+mount
+setxattr
+chroot
+setns
+ptrace

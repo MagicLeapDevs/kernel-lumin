@@ -1,0 +1,63 @@
+ML Power Management SubSystem(PMSS) over MLMUX
+
+Driver for ML proprietary PMSS communicating over MLMUX
+
+Required properties:
+ - compatible:		must be "ml,pmss_ml_mux".
+ - ml,chan-name:	MLMUX client channel name.
+ - mlmux:		phandle to the ML MUX controller.
+ - extcon:		phandle to the extcon for controlling USB HOST stack state.
+
+Optional properties:
+ - vcomp_alert_irq: this property is used to create an interrupt which handles
+				the case where VSYS drops below operating threshold.
+ - #thermal-sensor-cells: 	when this property is set the thermal
+ 				frame work will be able to register the
+ 				node as a thermal sensor. It also enables
+ 				driver thermal fw sensor registration while
+ 				disabling power_supply thermal zone registration.
+ - ml,batt_sens_id:
+ - ml,chrg_sens_id: 	if we are using this node as thermal sensor then we can
+ 			optionally set these two variables to uniquely identify
+ 			battery id and charger id when registering with thermal
+ 			zone. If these options are not present and we are using
+ 			thermal sensor registration then batt id is 0 and chrg id
+ 			is 1.
+ - ml,batt-hot-temp: 	if this property is set it will be used to signal
+			to userspace that the battery is HOT and appropriate actions should be
+			taken, e.g. start shutting down the system. The uevent will continuously
+			be generated while in this state. If not set a DEFINE will be used instead.
+			The unit is dC, i.e for 10.5C <105> should be used.
+ - ml,batt-cold-temp: 	if this property is set it will be used to signal
+			to userspace that the battery is COLD and appropriate actions should be
+			taken, e.g. start shutting down the system. The uevent will continuously
+			be generated while in this state. If not set a DEFINE will be used instead.
+			The unit is dC, i.e for -10.5C <(-105)> should be used.
+ - ml,batt-warm-temp: 	if this property is set it will be used to signal
+			to userspace that the battery is WARM and appropriate actions should be
+			taken, e.g. start shutting down the system. The uevent will continuously
+			be generated while in this state. If not set only HOT state will be used.
+			The unit is dC, i.e for 10.5C <105> should be used.
+ - ml,batt-cool-temp: 	if this property is set it will be used to signal
+			to userspace that the battery is COOL and appropriate actions should be
+			taken, e.g. start shutting down the system. The uevent will be generated
+			only on transition into this state. If not set only COLD state will be used.
+			The unit is dC, i.e for -10.5C <(-105)> should be used.
+ - bc12_cd:		phandle which points to device used for detecting BC1.2 ports. Used to get a
+			reference to an extcon device that will notify us about BC1.2 port
+			connection.
+Example:
+	ml_pmss {
+		compatible = "ml,pmss_ml_mux";
+		status = "okay";
+		vcomp_alert_irq = <&tegra_aon_gpio TEGRA_AON_GPIO(S, 4) GPIO_ACTIVE_HIGH>;
+		ml,chan-name = "pmss";
+		mlmux = <&ml_mux1>;
+		extcon = <&host_extcon>;
+		bc12_cd = <&usb_cd>;
+		ml,batt_sens_id = <0>;
+		ml,chrg_sens_id = <1>;
+		ml,batt-hot-temp = <600>;
+		ml,batt-cool-temp = <(-10)>;
+		ml,batt-cold-temp = <(-50)>;
+	};

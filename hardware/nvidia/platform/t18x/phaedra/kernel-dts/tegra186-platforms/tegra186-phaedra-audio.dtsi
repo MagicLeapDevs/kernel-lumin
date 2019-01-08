@@ -1,0 +1,118 @@
+/*
+ * tegra186-phaedra-audio.dtsi
+ *
+ * Audio device tree for the Phaedra product.
+ *
+ * Copyright (c) 2016, Magic Leap, Inc.  All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ */
+
+/* i2c@3180000 */
+&cam_i2c {
+	status = "okay";
+	fc_fsa8500: fsa8500@23 {
+		compatible = "fc,fsa8500";
+		reg = <0x23>;
+		status = "okay";
+		/* gpios for jack detection */
+		jack-gpios = <&tegra_main_gpio TEGRA_MAIN_GPIO(J, 5) GPIO_ACTIVE_LOW>;
+	};
+
+	ti_tlv320aic3206: aic3206@18 {
+		compatible = "ti,tlv320aic3206";
+		reg = <0x18>;
+		status = "okay";
+		/* gpios for hw-reset */
+		reset-gpios = <&tegra_main_gpio TEGRA_MAIN_GPIO(J, 6) GPIO_ACTIVE_LOW>;
+	};
+};
+
+&tegra_sound {
+	compatible = "nvidia,tegra-audio-t186ref-mobile-phaedra";
+	nvidia,model = "tegra-snd-t186ref-mobile-phaedra";
+
+	nvidia,dai-link-1 {
+		link-name = "spdif-dit-0";
+		cpu-dai = <&tegra_i2s1>;
+		codec-dai = <&spdif_dit0>;
+		cpu-dai-name = "I2S1";
+		codec-dai-name = "dit-hifi";
+		tx-mask = <0xFF>;
+		rx-mask = <0xFF>;
+		format = "dsp_a";
+		bitclock-slave;
+		frame-slave;
+		bitclock-inversion;
+		frame-noninversion;
+		bit-format = "s16_le";
+		bclk_ratio = <4>;
+		srate = <8000>;
+		num-channel = <1>;
+		ignore_suspend;
+		name-prefix = "x";
+		status = "okay";
+	};
+	nvidia,dai-link-2 {
+		link-name = "spdif-dit-1";
+		cpu-dai = <&tegra_i2s2>;
+		codec-dai = <&spdif_dit1>;
+		cpu-dai-name = "I2S2";
+		codec-dai-name = "dit-hifi";
+		format = "i2s";
+		bitclock-slave;
+		frame-slave;
+		bitclock-noninversion;
+		frame-noninversion;
+		bit-format = "s16_le";
+		bclk_ratio = <2>;
+		srate = <48000>;
+		num-channel = <2>;
+		ignore_suspend;
+		name-prefix = "y";
+		status = "okay";
+	};
+	tlv320aic3206_dai_link: nvidia,dai-link-4 {
+		link-name = "aic3206-playback";
+		cpu-dai = <&tegra_i2s4>;
+		codec-dai = <&ti_tlv320aic3206>;
+		cpu-dai-name = "I2S4";
+		codec-dai-name = "tlv320aic3206-hifi";
+		format = "i2s";
+		bitclock-slave;
+		frame-slave;
+		bitclock-noninversion;
+		frame-noninversion;
+		bit-format = "s16_le";
+		bclk_ratio = <2>;
+		srate = <48000>;
+		num-channel = <2>;
+		ignore_suspend;
+		name-prefix = "m";
+		status = "okay";
+	};
+};
+
+/ {
+	ahub {
+		/* Disable dmic1 pinctrl. */
+		dmic@2904000 {
+			nvidia,is-pinctrl = <0>;
+		};
+		/* Set i2s1 frame-sync to pcm mode. */
+		i2s@2901000 {
+			fsync-width = <0>;
+		};
+		/* Disable i2s3 pinctrl. */
+		i2s@2901200 {
+			nvidia,is-pinctrl = <0>;
+		};
+	};
+};

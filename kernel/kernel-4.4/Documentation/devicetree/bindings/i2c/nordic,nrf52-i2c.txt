@@ -1,0 +1,30 @@
+Nordic I2c client driver
+
+Required Properties
+-------------------
+- compatible: Must contain "nordic,nrf52_ml_mux"
+- queue-len: Sets number of frames for mux to use for tx queue
+- max-write-len: Sets the maximum write length in bytes
+- max-receive-len: Sets the maximum receive length in bytes
+- interrupts: interrupt to signal drdy on nrf52.
+
+Optional Property
+-------------------
+- tx-highpri: set the priority of mux tx queue to rt
+
+Example:
+&i2c_7 {
+	status = "okay";
+	ml_mux1: nrf52_ml_mux@66 {
+		compatible = "nordic,nrf52_ml_mux";
+		reg = <0x66>;
+		queue-len = <20>;
+		max-write-len = <128>;
+		max-receive-len = <128>;
+		wakeup-source;
+		interrupt-parent = <&tegra_gpio>;
+		interrupts = <TEGRA_GPIO(D, 3) GPIO_ACTIVE_HIGH>;
+		interrupt-names = "irq";
+		tx-highpri;
+	};
+};

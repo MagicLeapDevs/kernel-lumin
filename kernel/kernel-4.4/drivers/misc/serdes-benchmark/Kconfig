@@ -1,0 +1,5 @@
+config SERDES_BENCHMARK
+	tristate "SERDES benchmark driver"
+	default n
+	---help---
+	  This driver supports SERDES benchmarking.

@@ -1,0 +1,118 @@
+/*
+ * tegra186-phaedra-platform-p2.dtsi
+ *
+ * Main device tree for the phaedra product.
+ *
+ * Copyright (c) 2017, Magic Leap, Inc.  All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ */
+
+#include "tegra186-platforms/tegra186-phaedra-power.dtsi"
+
+/ {
+	bpmp_i2c {
+		spmic@3c {
+			/* FPS CID4 = 0x45 */
+			regulators {
+				sd1 {
+					regulator-name = "avdd_dsi_csi";
+					regulator-min-microvolt = <1200000>;
+					regulator-max-microvolt = <1200000>;
+					regulator-always-on;
+					regulator-boot-on;
+					maxim,active-fps-source = <MAX77620_FPS_SRC_DEF>;
+					maxim,active-fps-power-up-slot = <4>;
+					maxim,active-fps-power-down-slot = <1>;
+				};
+				sd3 {
+					regulator-name = "vdd-2v6-sysold";
+					regulator-min-microvolt = <2600000>;
+					regulator-max-microvolt = <2600000>;
+					maxim,active-fps-source = <MAX77620_FPS_SRC_DEF>;
+					maxim,active-fps-power-up-slot = <7>;
+					maxim,active-fps-power-down-slot = <1>;
+					/* SD3 will be used for testing only */
+					/delete-property/ regulator-always-on;
+					/delete-property/ regulator-boot-on;
+				};
+				ldo0 {
+					regulator-name = "vreg_appll_1v8";
+					maxim,active-fps-source = <MAX77620_FPS_SRC_NONE>;
+					maxim,active-fps-power-up-slot = <4>;
+					maxim,active-fps-power-down-slot = <3>;
+				};
+				ldo1 {
+					regulator-name = "spmic-ldo1";
+					maxim,active-fps-source = <MAX77620_FPS_SRC_NONE>;
+				};
+			};
+		};
+	};
+
+	fixed-regulators {
+		/delete-node/ vreg_ble_1v8;
+
+		/* VREG_OTG_5V0 - TPS61253 */
+		vdd_usb0_5v: vdd_usb0_5v {
+			compatible = "regulator-fixed";
+			regulator-name = "vdd-usb0-5v";
+			regulator-min-microvolt = <5000000>;
+			regulator-max-microvolt = <5000000>;
+			/* DNI - controlled by PD controller */
+			gpio = <&tegra_main_gpio TEGRA_MAIN_GPIO(L, 4) 0>;
+			enable-active-high;
+		};
+	};
+
+	gpio-keys {
+		volume_down {
+			label = "Volume Down";
+			gpios = <&tegra_aon_gpio TEGRA_AON_GPIO(FF, 2) GPIO_ACTIVE_LOW>;
+			linux,code = <KEY_VOLUMEDOWN>;
+			debounce-interval = <30>;
+		};
+	};
+
+	spi@3210000 {
+		/delete-node/ spi-ak9912;
+		/delete-node/ spi-icm20602;
+	};
+
+	wearable {
+		gpio_vsync_mux_en = <&tegra_main_gpio TEGRA_MAIN_GPIO(Y, 3) GPIO_ACTIVE_LOW>;
+		/delete-property/ gpio_flt_irq;
+	};
+
+	thermal-zones {
+		/delete-node/ tmp108_batt;
+		/delete-node/ tmp108_wlan;
+		/delete-node/ tmp108_gpu;
+	};
+};
+
+&ina3221x_41 {
+	channel@0 {
+		ti,rail-name = "VDD_SYS_WEARABLE";
+		ti,shunt-resistor-mohm = <4>;
+	};
+};
+
+&tmp108_batt_sensor {
+	status = "disabled";
+};
+
+&tmp108_wlan_sensor {
+	status = "disabled";
+};
+
+&tmp108_gpu_sensor {
+	status = "disabled";
+};

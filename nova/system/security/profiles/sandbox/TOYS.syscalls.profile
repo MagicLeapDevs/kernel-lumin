@@ -1,0 +1,9 @@
+:EXEC
+:KILL
+setxattr
+lsetxattr
+fsetxattr
+fgetxattr
+mknod
+mknodat
+settimeofday

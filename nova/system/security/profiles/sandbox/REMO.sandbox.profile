@@ -1,0 +1,4 @@
+jail
+syscalls
+no_new_privs
+allow_local_connections

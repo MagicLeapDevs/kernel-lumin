@@ -1,0 +1,316 @@
+/*
+ * tegra186-phaedra.dtsi
+ *
+ * Main device tree for the phaedra product.
+ *
+ * Copyright (c) 2016, Magic Leap, Inc.  All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ */
+
+#include "tegra186-phaedra.dtsi"
+#include "tegra186-platforms/tegra186-phaedra-comms-p0.dtsi"
+
+/ {
+	nvidia,dtsfilename = __DTBNAME__;
+
+	firmware {
+		android {
+			hardware = "quill";
+		};
+	};
+
+	chosen {
+		ml,disable-verity-check;
+	};
+
+	mtime_test {
+		compatible = "ml,mtime_test";
+		status = "okay";
+		gpio_mtime_test = <&tegra_main_gpio TEGRA_MAIN_GPIO(N, 5) GPIO_ACTIVE_HIGH>;
+		/*
+	        From the PEQ0 Parker Pinout spreadsheet:
+		GPIO_CAM6 AY34 AW32 unused_GPIO_CAM6 F13 SPI1_MOSI GPIO3_PN.05 VGP6 SPI4_DOUT
+		CODEC_SPI_DOUT J1412 pin 3
+		*/
+	};
+
+	pinctrl@3520000 {
+		pinmux {
+			usb2-debug {
+				status = "okay";
+			};
+		};
+	};
+
+	sdhci@3460000 {
+		status = "okay";
+	};
+
+	spi@3240000 {
+		status = "disabled";
+		spi-totem {
+			status = "disabled";
+		};
+	};
+
+	spi@3270000 {/* QSPI NOR */
+		status = "disabled";
+	};
+
+	spi@3210000 {
+		/delete-node/ spi-ak9912;
+		/delete-node/ spi-icm20602;
+	};
+
+	aon_gzl {
+		status = "okay";
+	};
+
+	pwm_fan_shared_data: pfsd {
+		active_rpm = <0 1000 2000 3000 4000 5000 6000 7000 10000 11000>;
+		state_cap_lookup = <2 2 2 2 3 3 3 4 4 4>;
+		state_cap = <7>;
+	};
+
+	pwm-fan {
+		active_pwm = <0 80 120 160 255 255 255 255 255 255>;
+	};
+
+	thermal-fan-est {
+		active_trip_temps = <0 51000 61000 71000 82000
+				140000 150000 160000 170000 180000>;
+		active_hysteresis = <0 15000 9000 9000 10000
+				0 0 0 0 0>;
+	};
+
+	tegra_tachometer: tachometer@39c0000 {
+		pulse-per-rev = <1>;
+		sampling-window = <1>;
+	};
+
+	thermal-zones {
+			Tboard_tegra {
+				thermal-sensors = <&tegra_tmp451 0>;
+			};
+			Tdiode_tegra {
+				thermal-sensors = <&tegra_tmp451 1>;
+			};
+
+			/delete-node/ tmp108_batt;
+			/delete-node/ tmp108_wlan;
+			/delete-node/ tmp108_gpu;
+	};
+
+	wearable {
+		compatible = "ml,wearable";
+		status = "okay";
+		pwr-supply = <&wearable_pwr_enable>;
+		max_curr = <750>;
+		gpio_vsync_irq = <&tegra_main_gpio TEGRA_MAIN_GPIO(J, 7) GPIO_ACTIVE_HIGH>;
+		gpio_on_off = <&tegra_main_gpio TEGRA_MAIN_GPIO(Y, 0) GPIO_ACTIVE_HIGH>;
+		gpio_ap_int = <&tegra_main_gpio TEGRA_MAIN_GPIO(P, 3) GPIO_ACTIVE_HIGH>;
+		gpio_vsync_mux_en = <&tegra_main_gpio TEGRA_MAIN_GPIO(D, 2) GPIO_ACTIVE_LOW>;
+		gpio_uart_tx = <&tegra_main_gpio TEGRA_MAIN_GPIO(T, 0) GPIO_ACTIVE_HIGH>;
+		gpio_extsync_irq = <&tegra_main_gpio TEGRA_MAIN_GPIO(T, 1) GPIO_ACTIVE_HIGH>;
+		/delete-property/ gpio-on-off-active-low;
+		/delete-property/ gpio_flt_irq;
+	};
+
+	serdes {
+		compatible = "ml,serdes";
+		status = "disabled";
+	};
+
+	at42qt1010_touch_sensor {
+		compatible = "atmel,at42qt1010";
+		pwr-supply = <&dummy_ldo_3p3v>;
+		gpio_irq = <&tegra_aon_gpio TEGRA_AON_GPIO(AA, 7) GPIO_ACTIVE_HIGH>;
+		gpio_sync = <&tegra_aon_gpio TEGRA_AON_GPIO(S, 3) GPIO_ACTIVE_HIGH>;
+		run_mode = "fast";
+		enable_on_suspend = <0>;
+	};
+
+	ufshci@2450000 {
+		vddio-ufs-supply = <&dummy_ldo_3p3v>;
+		vddio-ufs-ap-supply = <&dummy_ldo_1p8v>;
+	};
+
+	bpmp_i2c {
+		spmic@3c {
+			regulators {
+				ldo3 {
+					regulator-min-microvolt = <1800000>;
+					regulator-max-microvolt = <1800000>;
+					regulator-always-on;
+				};
+			};
+		};
+	};
+
+	ml_pmss {
+		/delete-property/ vcomp_alert_irq;
+	};
+
+	ml_therm {
+		status = "disabled";
+	};
+
+	fixed-regulators {
+		/* vdd_usb1_5v */
+		regulator@5 {
+			status = "disabled";
+		};
+		/* vdd_usb2_5v */
+		regulator@17 {
+			status = "disabled";
+		};
+		/* 70pin_CONN_PWR_ENABLE gpio pin */
+		wearable_pwr_enable: wearable_pwr_enable {
+			compatible = "regulator-fixed";
+			status = "okay";
+			regulator-name = "wearable_pwr_enable";
+			/* varies depending on battery voltage */
+			regulator-min-microvolt = <3800000>;
+			regulator-max-microvolt = <3800000>;
+			enable-active-high;
+			gpio = <&tegra_main_gpio TEGRA_MAIN_GPIO(N, 1) 0>;
+		};
+		/* 5V_BST_EN gpio pin */
+		fan_boost_5v: fan_boost_5v {
+			compatible = "regulator-fixed";
+			status = "okay";
+			regulator-name = "fan_boost_5v";
+			regulator-min-microvolt = <5000000>;
+			regulator-max-microvolt = <5000000>;
+			enable-active-high;
+			gpio = <&tegra_aon_gpio TEGRA_AON_GPIO(AA, 3) 0>;
+		};
+		/* PS_VDD_FAN_ENABLE gpio pin */
+		fan_enable: fan_enable {
+			compatible = "regulator-fixed";
+			status = "okay";
+			regulator-name = "fan_enable";
+			regulator-min-microvolt = <5000000>;
+			regulator-max-microvolt = <5000000>;
+			enable-active-high;
+			gpio = <&tegra_aon_gpio TEGRA_AON_GPIO(U, 0) 0>;
+			vin-supply = <&fan_boost_5v>;
+		};
+		/* Virtual Dummy 3.3V LDO */
+		dummy_ldo_3p3v: dummy_ldo_3p3v {
+			compatible = "regulator-fixed";
+			status = "okay";
+			regulator-name = "dummy_ldo_3p3v";
+			regulator-min-microvolt = <3300000>;
+			regulator-max-microvolt = <3300000>;
+			/* CARRIER_PWR_ON - always on */
+			regulator-always-on;
+			gpio = <0>;
+		};
+		/* Virtual Dummy 1.8V LDO */
+		dummy_ldo_1p8v: dummy_ldo_1p8v {
+			compatible = "regulator-fixed";
+			status = "okay";
+			regulator-name = "dummy_ldo_1p8v";
+			regulator-min-microvolt = <1800000>;
+			regulator-max-microvolt = <1800000>;
+			/* CARRIER_PWR_ON - always on */
+			regulator-always-on;
+			gpio = <0>;
+		};
+	};
+
+	host1x {
+		sor {
+			dp-display {
+				nvidia,is_ext_dp_panel = <0>;
+				ml,preferred_mode = <0>;
+			};
+		};
+
+		nvdisplay@15210000 {
+			status = "okay";
+			nvidia,dc-or-node = "/host1x/sor1";
+		};
+	};
+
+	/delete-node/ factory_kill;
+
+	gpio-keys {
+		volume_down {
+			label = "Volume Down";
+			gpios = <&tegra_aon_gpio TEGRA_AON_GPIO(FF, 2) GPIO_ACTIVE_LOW>;
+			linux,code = <KEY_VOLUMEDOWN>;
+			debounce-interval = <30>;
+		};
+	};
+};
+
+&gen8_i2c {
+	clock-frequency = <100000>;
+};
+
+&i2c_6 {
+	ps8713 {
+		status = "disabled";
+	};
+};
+
+&i2c_7 {
+	status = "okay";
+	ml_mux1: nrf52_ml_mux@66 {
+		compatible = "nordic,nrf52_ml_mux";
+		reg = <0x66>;
+		queue-len = <20>;
+		max-write-len = <128>;
+		max-receive-len = <128>;
+		wakeup-source;
+		interrupt-parent = <&tegra_main_gpio>;
+		interrupts = <TEGRA_MAIN_GPIO(D, 3) GPIO_ACTIVE_HIGH>;
+		interrupt-names = "irq";
+		tx-highpri;
+		status = "disabled";
+		nvidia-ready = <&tegra_main_gpio TEGRA_MAIN_GPIO(M, 0) GPIO_ACTIVE_HIGH>;
+		nordic-reset = <&tegra_main_gpio TEGRA_MAIN_GPIO(D, 1) GPIO_ACTIVE_HIGH>;
+		app_fw_file = "nrf52832_xxaa_beltpack_app.tar";
+		bl_fw_file = "nrf52832_xxaa_beltpack_bl.tar";
+	};
+
+	temp-sensor@4c {
+		status = "okay";
+	};
+};
+
+&i2c_8 {
+	temp-sensor@4c {
+		status = "disabled";
+	};
+};
+
+&i2c_1 {
+	/delete-node/ nrf52_ml_mux@66;
+};
+
+&vbus_id_extcon {
+		enable-gpios = <1>;
+};
+
+&tmp108_batt_sensor {
+	status = "disabled";
+};
+
+&tmp108_wlan_sensor {
+	status = "disabled";
+};
+
+&tmp108_gpu_sensor {
+	status = "disabled";
+};

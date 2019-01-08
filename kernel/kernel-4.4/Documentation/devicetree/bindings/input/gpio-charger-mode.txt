@@ -1,0 +1,15 @@
+Device-Tree bindings for input/gpio_charger_mode.c keyboard driver
+
+Required properties:
+	- compatible = "ml,gpio-charger-mode";
+	- gpios: OF device-tree gpio specification
+	- wakeup-source: Is this gpio a wake up source
+
+Example nodes:
+
+	gpio-charger-mode {
+		status = "disabled";
+		compatible = "ml,gpio-charger-mode";
+		gpios = <&tegra_aon_gpio TEGRA_AON_GPIO(FF, 0) GPIO_ACTIVE_LOW>;
+		wakeup-source;
+	};

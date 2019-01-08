@@ -1,0 +1,15 @@
+ML serdes-benchmark parameters
+
+Required properties:
+ - compatible		: Must contain "ml,serdes-benchmark" for the magic leap wearable device
+ - ml,chan-name     : Name of channel that will be used for SERDES benchmarking tests.
+
+Example:
+	wear_benchmark: benchmark0 {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		compatible = "ml,serdes-benchmark";
+		ml,chan-name = "benchmark";
+		mlmux = <&ml_mux2>;
+	};

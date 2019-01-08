@@ -1,0 +1,12 @@
+comment "Magic Leap Six Degree Of Freedom Raw Mode Driver"
+
+config ML_6DOF_RAW
+	tristate "Magic Leap six degrees of freedom raw mode"
+	depends on ML_6DOF
+	help
+	  This option enables support for Magic Leap
+	  six degree of freedom sub-system operating
+	  in raw data mode where all signal processing
+	  of received electromagnetic data is done
+	  in software components running in the user
+	  space.

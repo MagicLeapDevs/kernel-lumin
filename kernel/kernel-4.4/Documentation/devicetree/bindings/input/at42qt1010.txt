@@ -1,0 +1,21 @@
+* Atmel AT42QT1010 QTouch device tree bindings
+
+Required Properties:
+- compatible 		:	Shall contain "atmel,at42qt1010".
+- pwr_supply		:	Power supply needed to power the touch device
+- gpio_irq			:	GPIO for the interrupt signal.
+- gpio_sync			:	GPIO for the SYNC pin.
+- run_mode			:	configuration for the SYNC pin. Possible values are
+						"fast", "low_power", and "sync".
+- enable_on_suspend	:	Enable IRQ on suspend state.
+
+
+Example:
+	at42qt1010_touch_sensor {
+		compatible = "atmel,at42qt1010";
+		pwr_supply = <&at42qt1010_pwr>;
+		gpio_irq = <&tegra_gpio TEGRA_GPIO(AA, 4) GPIO_ACTIVE_HIGH>;
+		gpio_sync = <&tegra_gpio TEGRA_GPIO(Z, 2) GPIO_ACTIVE_HIGH>;
+		run_mode = "fast";
+		enable_on_suspend = <0>;
+	};

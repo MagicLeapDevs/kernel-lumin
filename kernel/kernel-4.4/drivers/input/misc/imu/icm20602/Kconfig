@@ -1,0 +1,13 @@
+#
+# icm20602 drivers for Invensense IMU
+#
+
+config ML_ICM_20602
+	tristate "Invensense ICM20602 devices"
+	depends on SPI && SYSFS && INPUT
+	default n
+	help
+		This driver supports the Invensense ICM20602 devices.
+		Driver uses SPI interface and reports data via
+		input subsystem.
+		Driver supports data rate upto 1KHz

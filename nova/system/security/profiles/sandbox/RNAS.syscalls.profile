@@ -1,0 +1,9 @@
+:EXEC
+setgroups
+setgid
+setuid
+setxattr
+mount
+arch_prctl
+prctl
+capset

@@ -1,0 +1,184 @@
+/*
+ * tegra186-phaedra-uvrc.dtsi
+ *
+ * USB Video Raw Camera device tree for the Phaedra product.
+ *
+ * Copyright (c) 2017, Magic Leap, Inc.  All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ */
+
+/ {
+
+	tcp: tegra-camera-platform {
+		compatible = "nvidia, tegra-camera-platform";
+		status = "okay";
+
+		num_csi_lanes = <4>;
+		max_lane_speed = <1500000>;
+		min_bits_per_pixel = <10>;
+		vi_peak_byte_per_pixel = <2>;
+		vi_bw_margin_pct = <25>;
+		isp_peak_byte_per_pixel = <5>;
+		isp_bw_margin_pct = <25>;
+		max_pixel_rate = <750000>;
+	};
+
+	/* Not using the vivid-driver instance */
+	/delete-node/ vivid-driver;
+
+	uvrc_remote_cam: uvrc {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		compatible = "ml,uvrc";
+		ml,chan-name = "vcam";
+		mlmux = <&ml_mux2>;
+	};
+
+	/* Override tegra-virtual-camera-platform */
+	tegra-virtual-camera-platform {
+		modules {
+			module0 {
+				badge = "vivid";
+
+				/* Mark position as center as next logical index
+				 * after rear (0), and front (1), already taken
+				 * within NVIDIA HAL.
+				 */
+				position = "center";
+				drivernode0 {
+					devname = "vivid";
+					proc-device-tree =
+					     "/proc/device-tree/uvrc/instance0";
+				};
+			};
+		};
+	};
+};
+
+&uvrc_remote_cam {
+	instance0 {
+		/**
+		* ==== Modes ====
+		* A modeX node is required to support v4l2 driver
+		* implementation with NVIDIA camera software stack
+		*
+		* == Signal properties ==
+		*
+		* tegra_sinterface = "";
+		* CSI Serial interface connected to tegra
+		* Incase of virtual HW devices, use virtual
+		* For SW emulated devices, use host
+		*
+		* pix_clk_hz = "";
+		* Sensor pixel clock used for calculations like
+		* exposure and framerate
+		*
+		* readout_orientation = "0";
+		* Based on camera module orientation.
+		* Only change readout_orientation if you specifically
+		* Program a different readout order for this mode
+		*
+		* == Image format Properties ==
+		*
+		* active_w = "";
+		* Pixel active region width
+		*
+		* active_h = "";
+		* Pixel active region height
+		*
+		* pixel_t = "";
+		* The sensor readout pixel pattern
+		*
+		* line_length = "";
+		* Pixel line length (width) for sensor mode.
+		* For HDMI source, this is total width calculated
+		* from dvtimings This is used to calibrate features
+		* in our camera stack.
+		*
+		*
+		* == DV Timings ==
+		*
+		* horz_front_proch = "";
+		* Horizontal front porch in pixels
+		*
+		* horz_sync = "";
+		* Horizontal sync length in pixels
+		*
+		* horz_back_porch="";
+		* Horizontal back porch in pixels
+		*
+		* vert_front_proch = "";
+		* Vertical front porch in pixels
+		*
+		* vert_sync = "";
+		* Vertical sync length in pixels
+		*
+		* vert_back_porch="";
+		* Vertical back porch in pixels
+		*
+		* == Source Control Settings ==
+		*
+		* gain_factor = "";
+		* Gain factor used to convert fixed point integer to float
+		* Gain range [min_gain/gain_factor, max_gain/gain_factor]
+		*
+		* framerate_factor = "";
+		* Framerate factor used to convert fixed point integer to float
+		* Framerate range [min_framerate/framerate_factor,
+				   max_framerate/framerate_factor]
+		*
+		* min_gain_val = ""; (floor to 6 decimal places)
+		* max_gain_val = ""; (floor to 6 decimal places)
+		* Gain limits for mode
+		*
+		* min_exp_time = ""; (ceil to integer)
+		* max_exp_time = ""; (ceil to integer)
+		* Exposure Time limits for mode (us)
+		*
+		* min_framerate = "";
+		* max_framerate = "";
+		* Framerate limits for mode (fps)
+		*
+		* embedded_metadata_height = "";
+		* Sensor embedded metadata height in units of rows.
+		* If sensor does not support embedded metadata value
+		* should be 0.
+		*/
+		mode0 { // 1920x1080
+			tegra_sinterface = "host";
+			pix_clk_hz = "81000000";
+			readout_orientation = "90";
+
+			active_w = "1920";
+			active_h = "1080";
+			pixel_t = "bayer_xrggb10p";
+			line_length = "1124";
+
+			horz_front_porch = "88";
+			horz_sync = "44";
+			horz_back_porch = "148";
+			vert_front_porch = "4";
+			vert_sync = "5";
+			vert_back_porch = "36";
+
+			gain_factor = "256";
+			framerate_factor = "100";
+			min_gain_val = "256";
+			max_gain_val = "8192";
+			min_exp_time = "14";
+			max_exp_time = "454623";
+			min_framerate = "220";
+			max_framerate = "3003";
+			embedded_metadata_height = "1";
+		};
+	};
+};

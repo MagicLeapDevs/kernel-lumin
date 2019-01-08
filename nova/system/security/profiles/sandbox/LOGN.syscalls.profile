@@ -1,0 +1,14 @@
+:EXEC
+:KILL
+lsetxattr
+setgid
+setgid16
+setgroups
+setgroups16
+setpgid
+setresgid
+setresgid16
+setresuid
+setresuid16
+setuid
+setuid16

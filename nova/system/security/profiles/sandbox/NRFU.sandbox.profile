@@ -1,0 +1,3 @@
+syscalls-permissive
+no_new_privs
+allow_local_connections
